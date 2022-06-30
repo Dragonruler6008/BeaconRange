@@ -1,2 +1,5 @@
 #Set the Beacon Range, 50 is default MC
-Beacon Range: 50
+Tier 1 Beacon Range: 30
+Tier 2 Beacon Range: 30
+Tier 3 Beacon Range: 40
+Tier 4 Beacon Range: 50

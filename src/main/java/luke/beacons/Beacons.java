@@ -51,15 +51,46 @@ public class Beacons extends JavaPlugin implements Listener {
                     Beacons.this.beaconsToCheck.forEach(beacon -> {
                         int tier = beacon.getTier();
 
-                        final double setRange = Config.getBeaconRange();
-                        if (beacon.getTier() == 4)
+                        if (tier == 1){
+                            final double setRange = Config.getBeaconRange1();
                             (new BukkitRunnable() {
                                 public void run() {
                                     beacon.setEffectRange(setRange);
                                     beacon.update();
                                     cancel();
                                 }
-                        }) .runTask(Beacons);
+                             }) .runTask(Beacons);
+                        }
+                        else if (tier == 2){
+                            final double setRange = Config.getBeaconRange2();
+                            (new BukkitRunnable() {
+                                public void run() {
+                                    beacon.setEffectRange(setRange);
+                                    beacon.update();
+                                    cancel();
+                                }
+                            }) .runTask(Beacons);
+                        }
+                        else if (tier == 3){
+                            final double setRange = Config.getBeaconRange3();
+                            (new BukkitRunnable() {
+                                public void run() {
+                                    beacon.setEffectRange(setRange);
+                                    beacon.update();
+                                    cancel();
+                                }
+                            }) .runTask(Beacons);
+                        }
+                        else if (tier == 4){
+                            final double setRange = Config.getBeaconRange4();
+                            (new BukkitRunnable() {
+                                public void run() {
+                                    beacon.setEffectRange(setRange);
+                                    beacon.update();
+                                    cancel();
+                                }
+                            }) .runTask(Beacons);
+                        }
                     });
                 Beacons.this.beaconsToCheck.clear();
                 Beacons.this.beaconBlocks.clear();
