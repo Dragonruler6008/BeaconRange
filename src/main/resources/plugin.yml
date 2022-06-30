@@ -1,0 +1,8 @@
+name: Beacons
+version: '${project.version}'
+main: luke.beacons.Beacons
+api-version: 1.19
+authors: [Galaticbiohazard]
+commands:
+  BeaconRange:
+    description: The plugin to change your beacon range.
