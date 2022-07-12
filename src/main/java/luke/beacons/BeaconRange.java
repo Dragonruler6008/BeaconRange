@@ -4,6 +4,7 @@ import luke.beacons.commands.CommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -123,13 +124,13 @@ public class BeaconRange extends JavaPlugin implements Listener {
         data = new File(getDataFolder(), "data.yml");
         if(!data.exists()) {
             saveResource("data.yml", false);
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + "Beacon location storage created!");
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + " Beacon location storage created!");
         }
         datac = new YamlConfiguration();
         try{
             datac.load(data);
         } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "Error Creating Beacon Location file, beacons outside of render distance may not work properly (USE AT OWN RISK) ");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + " Error Creating Beacon Location file, beacons outside of render distance may not work properly (USE AT OWN RISK) ");
             e.printStackTrace();
         }
     }
@@ -137,10 +138,13 @@ public class BeaconRange extends JavaPlugin implements Listener {
     @EventHandler
     public void beaconStorageAdd(BlockPlaceEvent event) {
         Block block = event.getBlock();
-        if( ! (block instanceof Beacon) ) {
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.RED + "Im not a beacon!");
+        Material mat = block.getType();
+        if(!mat.equals(Material.BEACON)) {
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.RED + " Im not a beacon!");
         }else {
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + "I am a Beacon!");
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + " I am a Beacon!");
+            Chunk chunk = block.getChunk();
+
         }
         //Chunk chunk = block.getChunk();
         // What info is useful?
@@ -150,7 +154,14 @@ public class BeaconRange extends JavaPlugin implements Listener {
 
     @EventHandler
     public void beaconStorageRemove(BlockBreakEvent event) {
-
+        Block block = event.getBlock();
+        Material mat = block.getType();
+        if(!mat.equals(Material.BEACON)) {
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.RED + " Im not a beacon! (Now Gone)");
+        }
+        else {
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + " I am a Beacon! (Now gone)");
+        }
     }
 
 

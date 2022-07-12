@@ -1,6 +1,6 @@
 name: Beacons
 version: '${project.version}'
-main: luke.beacons.Beacons
+main: luke.beacons.BeaconRange
 api-version: 1.19
 authors: [Galaticbiohazard]
 commands:
