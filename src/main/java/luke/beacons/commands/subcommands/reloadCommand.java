@@ -1,11 +1,9 @@
 package luke.beacons.commands.subcommands;
 
-import luke.beacons.Beacons;
+import luke.beacons.BeaconRange;
 import luke.beacons.commands.SubCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-
-import java.util.List;
 
 public class reloadCommand extends SubCommand {
     @Override
@@ -25,7 +23,7 @@ public class reloadCommand extends SubCommand {
 
     @Override
     public void perform(CommandSender sender, String[] args) {
-        Beacons.getPlugin().reloadConfig();
+        BeaconRange.getPlugin().reloadConfig();
         sender.sendMessage(ChatColor.AQUA + "BeaconRange Config Reloaded!");
     }
 }

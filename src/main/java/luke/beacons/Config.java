@@ -3,7 +3,7 @@ package luke.beacons;
 import org.bukkit.plugin.Plugin;
 
 public class Config {
-    static Plugin plugin = Beacons.getPlugin();
+    static Plugin plugin = BeaconRange.getPlugin();
     public static double getBeaconRange1() {
         return plugin.getConfig().getDouble("Tier 1 Beacon Range");
     }
@@ -16,4 +16,6 @@ public class Config {
     public static double getBeaconRange4() {
         return plugin.getConfig().getDouble("Tier 4 Beacon Range");
     }
+
+    public static boolean forceloadingEnabled() {return plugin.getConfig().getBoolean("Forceloading enabled");}
 }

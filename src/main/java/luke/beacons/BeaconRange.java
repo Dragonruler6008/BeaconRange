@@ -1,8 +1,13 @@
 package luke.beacons;
 
 import luke.beacons.commands.CommandManager;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Objects;
 import com.destroystokyo.paper.event.block.BeaconEffectEvent;
@@ -12,17 +17,21 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-public class Beacons extends JavaPlugin implements Listener {
-    private static Beacons Beacons;
+import java.io.File;
+public class BeaconRange extends JavaPlugin implements Listener {
+    private static BeaconRange BeaconRange;
+    public File data;
+    public FileConfiguration datac;
     BukkitTask beaconTask;
 
 
     @Override
     public void onEnable() {
-        Beacons = this;
+        BeaconRange = this;
         saveDefaultConfig();
         getServer().getPluginManager().registerEvents(this, this);
         Objects.requireNonNull(getCommand("BeaconRange")).setExecutor(new CommandManager());
+        createBeaconLocFile();
         beaconAsyncChecker();
 
 
@@ -30,15 +39,15 @@ public class Beacons extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        if(Beacons != null) Beacons.shutdown();
+        if(BeaconRange != null) BeaconRange.shutdown();
     }
 
     public void shutdown() {
         getServer().getPluginManager().disablePlugin(this);
     }
 
-    public static Beacons getPlugin () {
-        return Beacons;
+    public static BeaconRange getPlugin () {
+        return BeaconRange;
     }
 
     HashSet<Block> beaconBlocks = new HashSet<>();
@@ -47,8 +56,8 @@ public class Beacons extends JavaPlugin implements Listener {
     public void beaconAsyncChecker() {
         this.beaconTask = (new BukkitRunnable () {
             public void run() {
-                if(Beacons.this.beaconsToCheck.size() > 0)
-                    Beacons.this.beaconsToCheck.forEach(beacon -> {
+                if(BeaconRange.this.beaconsToCheck.size() > 0)
+                    BeaconRange.this.beaconsToCheck.forEach(beacon -> {
                         int tier = beacon.getTier();
 
                         if (tier == 1){
@@ -59,7 +68,7 @@ public class Beacons extends JavaPlugin implements Listener {
                                     beacon.update();
                                     cancel();
                                 }
-                             }) .runTask(Beacons);
+                             }) .runTask(BeaconRange);
                         }
                         else if (tier == 2){
                             final double setRange = Config.getBeaconRange2();
@@ -69,7 +78,7 @@ public class Beacons extends JavaPlugin implements Listener {
                                     beacon.update();
                                     cancel();
                                 }
-                            }) .runTask(Beacons);
+                            }) .runTask(BeaconRange);
                         }
                         else if (tier == 3){
                             final double setRange = Config.getBeaconRange3();
@@ -79,7 +88,7 @@ public class Beacons extends JavaPlugin implements Listener {
                                     beacon.update();
                                     cancel();
                                 }
-                            }) .runTask(Beacons);
+                            }) .runTask(BeaconRange);
                         }
                         else if (tier == 4){
                             final double setRange = Config.getBeaconRange4();
@@ -89,13 +98,13 @@ public class Beacons extends JavaPlugin implements Listener {
                                     beacon.update();
                                     cancel();
                                 }
-                            }) .runTask(Beacons);
+                            }) .runTask(BeaconRange);
                         }
                     });
-                Beacons.this.beaconsToCheck.clear();
-                Beacons.this.beaconBlocks.clear();
+                BeaconRange.this.beaconsToCheck.clear();
+                BeaconRange.this.beaconBlocks.clear();
             }
-        }).runTaskTimer(Beacons, 0L, 20L);
+        }).runTaskTimer(BeaconRange, 0L, 20L);
     }
 
 
@@ -108,6 +117,20 @@ public class Beacons extends JavaPlugin implements Listener {
         }
     }
 
+    public void createBeaconLocFile() {
+        data = new File(getDataFolder(), "data.yml");
+        if(!data.exists()) {
+            saveResource("data.yml", false);
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + "Beacon location storage created!");
+        }
+        datac = new YamlConfiguration();
+        try{
+            datac.load(data);
+        } catch (Exception e) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error Creating Beacon Location file, beacons outside of render distance may not work properly (USE AT OWN RISK) ");
+            e.printStackTrace();
+        }
+    }
 
 
 
