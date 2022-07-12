@@ -3,8 +3,11 @@ package luke.beacons;
 import luke.beacons.commands.CommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
@@ -126,9 +129,28 @@ public class BeaconRange extends JavaPlugin implements Listener {
         try{
             datac.load(data);
         } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error Creating Beacon Location file, beacons outside of render distance may not work properly (USE AT OWN RISK) ");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "Error Creating Beacon Location file, beacons outside of render distance may not work properly (USE AT OWN RISK) ");
             e.printStackTrace();
         }
+    }
+
+    @EventHandler
+    public void beaconStorageAdd(BlockPlaceEvent event) {
+        Block block = event.getBlock();
+        if( ! (block instanceof Beacon) ) {
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.RED + "Im not a beacon!");
+        }else {
+            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + "I am a Beacon!");
+        }
+        //Chunk chunk = block.getChunk();
+        // What info is useful?
+        // 1. position (X,Z)
+        // 2. ...
+    }
+
+    @EventHandler
+    public void beaconStorageRemove(BlockBreakEvent event) {
+
     }
 
 
