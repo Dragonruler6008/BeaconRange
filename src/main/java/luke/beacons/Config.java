@@ -17,5 +17,5 @@ public class Config {
         return plugin.getConfig().getDouble("Tier 4 Beacon Range");
     }
 
-    public static boolean forceloadingEnabled() {return plugin.getConfig().getBoolean("Forceloading enabled");}
+    //public static boolean forceloadingEnabled() {return plugin.getConfig().getBoolean("Forceloading enabled");}
 }

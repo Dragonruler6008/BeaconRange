@@ -3,7 +3,6 @@ package luke.beacons;
 import luke.beacons.commands.CommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -135,34 +134,34 @@ public class BeaconRange extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
-    public void beaconStorageAdd(BlockPlaceEvent event) {
-        Block block = event.getBlock();
-        Material mat = block.getType();
-        if(!mat.equals(Material.BEACON)) {
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.RED + " Im not a beacon!");
-        }else {
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + " I am a Beacon!");
-            Chunk chunk = block.getChunk();
-
-        }
-        //Chunk chunk = block.getChunk();
-        // What info is useful?
-        // 1. position (X,Z)
-        // 2. ...
-    }
-
-    @EventHandler
-    public void beaconStorageRemove(BlockBreakEvent event) {
-        Block block = event.getBlock();
-        Material mat = block.getType();
-        if(!mat.equals(Material.BEACON)) {
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.RED + " Im not a beacon! (Now Gone)");
-        }
-        else {
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + " I am a Beacon! (Now gone)");
-        }
-    }
+    //CODE FOR FUTURE FORCELOADING
+//    @EventHandler
+//    public void beaconStorageAdd(BlockPlaceEvent event) {
+//        Block block = event.getBlock();
+//        Material mat = block.getType();
+//        if(!mat.equals(Material.BEACON)) {
+//            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.RED + " Im not a beacon!");
+//        }else {
+//            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + " I am a Beacon!");
+//
+//        }
+//        //Chunk chunk = block.getChunk();
+//        // What info is useful?
+//        // 1. position (X,Z)
+//        // 2. ...
+//    }
+//
+//    @EventHandler
+//    public void beaconStorageRemove(BlockBreakEvent event) {
+//        Block block = event.getBlock();
+//        Material mat = block.getType();
+//        if(!mat.equals(Material.BEACON)) {
+//            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.RED + " Im not a beacon! (Now Gone)");
+//        }
+//        else {
+//            Bukkit.getConsoleSender().sendMessage(String.valueOf(BeaconRange) + ChatColor.DARK_GREEN + " I am a Beacon! (Now gone)");
+//        }
+//    }
 
 
 
